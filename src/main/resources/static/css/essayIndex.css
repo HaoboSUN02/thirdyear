@@ -1,0 +1,49 @@
+.all{
+    display: flex;
+    width: 90%;
+    height: 280px;
+    background-color: rgba(227, 229, 232, 0.75);;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+
+.item-left{
+    width: 45%;
+}
+
+.left_img{
+    height: 240px;
+    width: 88%;
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.title{
+    font-weight: normal;
+    font-size:16px;
+    padding-top: 5%;
+    margin-bottom: 8%;
+}
+
+.item-right{
+    display: flex;
+    /*解决图像不对称的问题*/
+    width: 45%;
+    flex-direction:column;
+    justify-content: space-between;
+}
+
+.time{
+    display: flex;
+    padding-bottom: 8%;
+}
+
+
+.time img{
+    width: 15px;
+    height: 15px;
+}
+.time div{
+    margin-left: 8px;
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="website/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户帖子新增</title>
+</head>
+<style>
+    label {
+        font-size: 16px;
+    }
+</style>
+<body>
+
+
+<!--导航-->
+<nav th:replace="website/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+</nav>
+
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a th:href="@{/web/post/input}" class="active item">发布</a>
+            <a th:href="@{/web/post}" class="purple  item">列表</a>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<!--中间-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <!--整体表单-->
+        <form id="blog-form" action="#" th:action="@{/web/addPost}" method="post" class="ui form">
+            <input type="hidden" name="id">
+            <input type="hidden" name="published">
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+            </div>
+
+            <!--上传图片-->
+            <div class="form-group">
+                <img src="/image/add.jpg" alt="" id="img" style="width: 850px;height: 350px"/>
+                <input type="file" id="photo" onchange="postData()">
+                <input type="text" id="image" name="image" readonly="readonly" placeholder="图片地址">
+            </div>
+
+            <!--上传文件-->
+            <div class="form-group">
+                <input type="file" id="file" onchange="uploadFiles()">
+                <input type="text" id="document" name="document" readonly="readonly" placeholder="文件地址">
+            </div>
+
+            <div class="field">
+                <div id="md-content" style="z-index: 1 !important;">
+                    <label>内容</label>
+                    <textarea placeholder="内容" name="content"></textarea>
+                </div>
+            </div>
+            <div class="ui container right aligned">
+                <!--不加button，默认是submit-->
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button type="button" id="publish-btn" class="ui purple button">发布</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/semantic.min.js}"></script>
+<script type="text/javascript">
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('#publish-btn').click(function () {
+        $('[name="published"]').val(true);
+        $('#blog-form').submit();
+    });
+
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'title',
+                rules: [{
+                    type: 'empty',
+                    prompt: '标题：请输入标题'
+                }]
+            },
+            content: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '标题：请输入内容'
+                }]
+            }
+        }
+    });
+
+    function postData() {
+        var formData = new FormData();
+        formData.append("file", $("#photo")[0].files[0]);
+        $.ajax({
+            url: '/file/upload',
+            type: "post",
+            data: formData,
+            processData: false, // 告诉jQuery不要去处理发送的数据
+            contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+            dataType: 'text',
+            success: function (data) {
+                var params = JSON.parse(data);
+                console.log(params.data.fileName);
+                $("#img").attr("src", params.data.fileName);
+                $("#image").val(params.data.fileName);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function uploadFiles() {
+        var formData = new FormData();
+        formData.append("file", $("#file")[0].files[0]);
+        $.ajax({
+            url: '/file/upload',
+            type: "post",
+            data: formData,
+            processData: false, // 告诉jQuery不要去处理发送的数据
+            contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+            dataType: 'text',
+            success: function (data) {
+                var params = JSON.parse(data);
+                console.log(params.data.fileName);
+                $("#document").val(params.data.fileName);
+            },
+            error: function (data) {
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
