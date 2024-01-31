@@ -1,0 +1,72 @@
+<!doctype html>
+
+<title>CodeMirror: APL mode</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../../doc/docs.css">
+
+<link rel="stylesheet" href="../../lib/codemirror.css">
+<script src="../../lib/codemirror.js"></script>
+<script src="../../addon/edit/matchbrackets.js"></script>
+<script src="./apl.js"></script>
+<style>
+	.CodeMirror { border: 2px inset #dee; }
+    </style>
+<div id=nav>
+  <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
+
+  <ul>
+    <li><a href="../../index.html">Home</a>
+    <li><a href="../../doc/manual.html">Manual</a>
+    <li><a href="https://github.com/codemirror/codemirror">Code</a>
+  </ul>
+  <ul>
+    <li><a href="../index.html">Language modes</a>
+    <li><a class=active href="#">APL</a>
+  </ul>
+</div>
+
+<article>
+<h2>APL mode</h2>
+<form><textarea id="code" name="code">
+‚ç? Conway's game of life
+
+‚ç? This example was inspired by the impressive demo at
+‚ç? http://www.youtube.com/watch?v=a9xAKttWgP4
+
+‚ç? Create a matrix:
+‚ç?     0 1 1
+‚ç?     1 1 0
+‚ç?     0 1 0
+creature ‚Ü? (3 3 ‚ç? ‚ç? 9) ‚à? 1 2 3 4 7   ‚ç? Original creature from demo
+creature ‚Ü? (3 3 ‚ç? ‚ç? 9) ‚à? 1 3 6 7 8   ‚ç? Glider
+
+‚ç? Place the creature on a larger board, near the centre
+board ‚Ü? ¬Ø1 ‚ä? ¬Ø2 ‚å? 5 7 ‚Ü? creature
+
+‚ç? A function to move from one generation to the next
+life ‚Ü? {‚à?/ 1 ‚ç? ‚à? 3 4 = ‚ä?+/ +‚å? 1 0 ¬Ø1 ‚à?.‚ä? 1 0 ¬Ø1 ‚åΩ¬? ‚äÇ‚çµ}
+
+‚ç? Compute n-th generation and format it as a
+‚ç? character matrix
+gen ‚Ü? {' #'[(life ‚ç? ‚ç?) board]}
+
+‚ç? Show first three generations
+(gen 1) (gen 2) (gen 3)
+</textarea></form>
+
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/apl"
+      });
+    </script>
+
+    <p>Simple mode that tries to handle APL as well as it can.</p>
+    <p>It attempts to label functions/operators based upon
+    monadic/dyadic usage (but this is far from fully fleshed out).
+    This means there are meaningful classnames so hover states can
+    have popups etc.</p>
+
+    <p><strong>MIME types defined:</strong> <code>text/apl</code> (APL code)</p>
+  </article>

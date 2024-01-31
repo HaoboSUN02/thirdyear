@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warning.mapper.PostMapper">
+    <select id="getPostBySearch" resultType="com.warning.entity.Post">
+        select * from tb_post
+        <where>
+            <if test="userid != null">
+                and userid = #{userid}
+            </if>
+            <if test="title != null">
+                and title LIKE CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+        </where>
+        order by createtime desc
+    </select>
+</mapper>

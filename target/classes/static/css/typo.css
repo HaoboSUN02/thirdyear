@@ -1,0 +1,330 @@
+@charset "utf-8";
+
+.typo p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* 重设 HTML5 工具分类, IE �?要在 js �? createElement(TAG) */
+.typo article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  display: block;
+}
+
+/* HTML5 媒体文件�? img 保持�?�? */
+.typo audio, canvas, video {
+  display: inline-block;
+}
+
+/* 要注意表单元素并不继承父�? font 的问�? */
+.typo button, input, select, textarea {
+  font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+}
+
+.typo button::-moz-focus-inner,
+.typo input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/* 去掉各Table cell 的边距并让其边重�? */
+.typo table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 去除默认边框 */
+.typo fieldset, img {
+  border: 0;
+}
+
+/* �?/段落引用 */
+.typo blockquote {
+  position: relative;
+  color: #999;
+  font-weight: 400;
+  border-left: 1px solid #1abc9c;
+  padding-left: 1em;
+  margin: 1em 3em 1em 2em;
+}
+
+@media only screen and ( max-width: 640px ) {
+  .typo blockquote {
+    margin: 1em 0;
+  }
+}
+
+/* Firefox 以外，元素没有下划线，需添加 */
+.typo acronym, abbr {
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+
+/* 添加鼠标问号，进�?步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌�? */
+.typo abbr {
+  cursor: help;
+}
+
+/* �?致的 del 样式 */
+.typo del {
+  text-decoration: line-through;
+}
+
+.typo address, caption, cite, code, dfn, em, th, var {
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* 去掉列表前的标识, li 会继承，大部分网站�?�常用列表来很多内容，所以应该当�? */
+.typo ul, ol {
+  list-style: none;
+}
+
+/* 对齐是排版最重要的因�?, 别让�?么都居中 */
+.typo caption, th {
+  text-align: left;
+}
+
+.typo q:before,.typo  q:after {
+  content: '';
+}
+
+/* 统一上标和下�? */
+.typo sub,.typo  sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+
+.typo :root sub,.typo  :root sup {
+  vertical-align: baseline; /* for ie9 and other modern browsers */
+}
+
+.typo sup {
+  top: -0.5em;
+}
+
+.typo sub {
+  bottom: -0.25em;
+}
+
+/* 让链接在 hover 状�?�下显示下划�? */
+.typo a {
+  color: #1abc9c;
+}
+
+.typo a:hover {
+  text-decoration: underline;
+}
+
+.typo a {
+  border-bottom: 1px solid #1abc9c;
+}
+
+.typo a:hover {
+  border-bottom-color: #555;
+  color: #555;
+  text-decoration: none;
+}
+
+/* 默认不显示下划线，保持页面简�? */
+.typo ins,.typo  a {
+  text-decoration: none;
+}
+
+/* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的�?
+ * 要做到更好，向后兼容的话，添�? class="typo-u" 来显示专名号
+ * 关于 <u> 工具分类：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+ * 被放弃的�? 4，之前一直搞�? http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+ * �?篇关�? <u> 工具分类的很好文章：http://html5doctor.com/u-element/
+ */
+.typo u,.typo  .typo-u {
+  text-decoration: underline;
+}
+
+/* 标记，类似于手写的荧光笔的作�? */
+.typo mark {
+  background: #fffdd1;
+  border-bottom: 1px solid #ffedce;
+  padding: 2px;
+  margin: 0 5px;
+}
+
+/* 代码片断 */
+.typo pre,.typo  code,.typo  pre tt {
+  font-family: Courier, 'Courier New', monospace;
+}
+
+.typo pre {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 1em 1.5em;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* �?致化 horizontal rule */
+.typo hr {
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 0.8em;
+  height: 10px;
+}
+
+/* 底部印刷体�?�版本等标记 */
+.typo small,.typo  .typo-small,
+  /* 图片说明 */
+.typo figcaption {
+  font-size: 0.9em;
+  color: #888;
+}
+
+.typo strong,.typo  b {
+  font-weight: bold;
+  color: #000;
+}
+
+/* 可拖动文件添加拖动手�? */
+.typo [draggable] {
+  cursor: move;
+}
+
+.typo .clearfix:before,.typo  .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.typo .clearfix:after {
+  clear: both;
+}
+
+.typo .clearfix {
+  zoom: 1;
+}
+
+/* 强制文本换行 */
+.typo .textwrap,.typo .textwrap td,.typo  .textwrap th {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.typo .textwrap-table {
+  table-layout: fixed;
+}
+
+/* 提供 serif 版本的字体设�?: iOS 下中文自�? fallback �? sans-serif */
+.typo .serif {
+  font-family: Palatino, Optima, Georgia, serif;
+}
+
+/* 保证�?/段落之间的空白隔�? */
+.typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+.typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote {
+  margin-bottom: 1.2em
+}
+
+.typo h1,.typo  h2,.typo  h3,.typo  h4,.typo  h5,.typo  h6 {
+  font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+  font-weight: 100;
+  color: #000;
+  line-height: 1.35;
+}
+
+/* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优�? */
+.typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6,
+.typo-h1, .typo-h2, .typo-h3, .typo-h4, .typo-h5, .typo-h6 {
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  line-height: 1.35;
+}
+
+.typo h1, .typo-h1 {
+  font-size: 2em;
+}
+
+.typo h2, .typo-h2 {
+  font-size: 1.8em;
+}
+
+.typo h3, .typo-h3 {
+  font-size: 1.6em;
+}
+
+.typo h4, .typo-h4 {
+  font-size: 1.4em;
+}
+
+.typo h5, .typo h6, .typo-h5, .typo-h6 {
+  font-size: 1.2em;
+}
+
+/* 在文章中，应该还�? ul �? ol 的样�? */
+.typo ul, .typo-ul {
+  margin-left: 1.3em;
+  list-style: disc;
+}
+
+.typo ol, .typo-ol {
+  list-style: decimal;
+  margin-left: 1.9em;
+}
+
+.typo li ul, .typo li ol, .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol {
+  margin-bottom: 0.8em;
+  margin-left: 2em;
+}
+
+.typo li ul, .typo-ul ul, .typo-ol ul {
+  list-style: circle;
+}
+
+/* �? ul/ol，在文章中应�? table 基本格式 */
+.typo table th, .typo table td, .typo-table th, .typo-table td, .typo table caption {
+  border: 1px solid #ddd;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+.typo table th, .typo-table th {
+  background: #fbfbfb;
+}
+
+.typo table thead th, .typo-table thead th {
+  background: #f1f1f1;
+}
+
+.typo table caption {
+  border-bottom: none;
+}
+
+/* 去除 webkit �? input �? textarea 的默认样�?  */
+.typo-input, .typo-textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.typo-em, .typo em, legend, caption {
+  color: #000;
+  font-weight: inherit;
+}
+
+/* �?重号，只能在少量（少�?100个字符）且全是全角字符的情况下使�? */
+.typo-em {
+  position: relative;
+}
+
+.typo-em:after {
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  content: "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・";
+}
+
+/* Responsive images */
+.typo img {
+  max-width: 100%;
+}

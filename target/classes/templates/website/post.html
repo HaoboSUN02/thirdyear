@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="website/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息发布</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="website/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+</nav>
+
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a th:href="@{/web/post/input}" class="item">发布</a>
+            <a th:href="@{/web/post}" class="purple active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <!--查询表单需要是form提交数据-->
+        <form th:action="@{/web/post/search}" method="post" class="ui segment form">
+            <!--fields代表一个区域,inline缩短区域的效果-->
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <button class="ui mini purple basic button" id="search-btn" type="submit">搜索</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="table-container">
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>发布内容</th>
+                    <th>图片</th>
+                    <th>图片违规</th>
+                    <th>文件</th>
+                    <th>发布时间</th>
+                    <th>发布状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post:${pageInfo.list}">
+                    <td th:utext="${post.getTitle()}"></td>
+                    <td th:utext="${post.getContent()}"></td>
+                    <td>
+                        <div th:if="${post.getImage() != null and post.getImage() != ''}"
+                             th:data="${post.image}"
+                             th:onclick="|downloadFile(this.getAttribute('data'))|"
+                        >
+                            <img th:src="'https://localhost:8080/' + ${post.getImage()}"
+                                 style="width: 160px;height: 80px"/>
+                        </div>
+                        <div style="text-align: center"
+                             th:unless="${post.getImage() != null and post.getImage() != ''}">无图片
+                        </div>
+                    </td>
+                    <td>
+                        <div th:if="${post.getImgError() != null and post.getImgError() != ''}"
+                             th:utext="${post.getImgError()}"></div>
+                        <div style="text-align: center" th:unless="${post.getImgError()}">无</div>
+                    </td>
+                    <td>
+                        <div th:if="${post.getDocument() != null and post.getDocument() != ''}"
+                             th:data="${post.document}"
+                             th:onclick="|downloadFile(this.getAttribute('data'))|"
+                        >
+                            下载文件
+                        </div>
+                        <div style="text-align: center"
+                             th:unless="${post.getDocument() != null and post.getDocument() != ''}">无文件
+                        </div>
+                    </td>
+                    <td th:text="${#dates.format(post.getCreatetime(),'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <div th:if="${post.getStatus() == 0}">待审核</div>
+                        <div th:if="${post.getStatus() == 1}">审核通过</div>
+                        <div th:if="${post.getStatus() == 2}">审核失败</div>
+                    </td>
+                    <td>
+                        <a href="#" th:if="${post.getStatus() == 0}" th:href="@{/web/post/{id}/input(id=${post.id})}"
+                           class="ui mini purple basic button">编辑</a>
+                        <a th:href="@{/web/post/{id}/delete(id=${post.id})}"
+                           onclick="return confirm('您确定要删除吗？')" class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <!--th colspan是合并单元格-->
+                    <th colspan="8">
+                        <div class="ui menu pagination">
+                            <div class="item"><a th:href="@{/web/post}"></a></div>
+                            <div class="item"><a
+                                    th:href="@{/web/post(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a>
+                            </div>
+                            <div class="item"><a
+                                    th:href="@{/web/post(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a>
+                            </div>
+                            <div class="item"><a th:href="@{/web/post(pageNum=${pageInfo.pages})}">尾页</a>
+                            </div>
+                        </div>
+                        <div class="ui segment m-inline-block">
+                            <p>当前第<span th:text="${pageInfo.pageNum}"></span>页，总<span
+                                    th:text="${pageInfo.pages}"></span>页，共<span th:text="${pageInfo.total}"></span>条记录
+                            </p>
+                        </div>
+                        <a th:href="@{/web/post/input}"
+                           class="ui mini right floated purple basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示：</div>
+                <p th:text="${message}">恭喜，操作成功！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript">
+    function downloadFile(url) {
+        console.log(url)
+        const lastIndex = url.lastIndexOf("/");
+        const result = url.substring(lastIndex + 1);
+        console.log(result)
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = result;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>
